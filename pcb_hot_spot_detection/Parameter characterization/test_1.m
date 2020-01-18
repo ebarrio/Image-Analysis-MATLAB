@@ -30,10 +30,40 @@ subplot(2,2,2), imshow(cold_cov), colorbar;
 subplot(2,2,3), imshow(hot), colorbar;
 subplot(2,2,4), imshow(hot_cov), colorbar;
 %% 2.1 RBB ANALYSIS BIVARIATE HISTOGRAM
-r = hot(:,:,1); g = hot(:,:,2); b = hot(:,:,3);
-%% RED VS GRREN
-fig_rvsg = figure(3);fig_rvsg.WindowState = 'maximized';
-histogram2(r,g,'DisplayStyle','tile','ShowEmptyBins','on', ...
-    'XBinLimits',[0 255],'YBinLimits',[0 255]);
-    axis equal; colorbar, xlabel('Red Values')
-    ylabel('Green Values'), title('Green vs. Red Pixel Components')
+for i = 1:2
+    if (i == 1)
+        fig_hot = figure(3);fig_hot.WindowState = 'maximized';fig_hot.Name = 'HOT RGB ANALYSIS';
+        r = hot(:,:,1); g = hot(:,:,2); b = hot(:,:,3);
+    else
+        fig_cold = figure(4);fig_cold.WindowState = 'maximized';fig_cold.Name = 'COLD RGB ANALYSIS';
+        r = cold(:,:,1); g = cold(:,:,2); b = cold(:,:,3);       
+    end
+    % RED VS GRREN
+   
+    subplot(2,2,1);
+    h1 = histogram2(r,g,'DisplayStyle','tile','ShowEmptyBins','on', ...
+        'XBinLimits',[0 255],'YBinLimits',[0 255]);
+        axis equal; colorbar, xlabel('Red Values')
+        ylabel('Green Values'), title('Green vs. Red Pixel Components')
+        ax = gca; ax.CLim = [0 500];
+    % RED VS BLUE
+    subplot(2,2,2);
+    histogram2(r,b,'DisplayStyle','tile','ShowEmptyBins','on', ...
+        'XBinLimits',[0 255],'YBinLimits',[0 255]);
+        axis equal; colorbar, xlabel('Red Values')
+        ylabel('Blue Values'), title('Blue vs. Red Pixel Components')
+        ax = gca; ax.CLim = [0 500];
+    % GREEN VS BLUE
+    subplot(2,2,3);
+    histogram2(g,b,'DisplayStyle','tile','ShowEmptyBins','on', ...
+        'XBinLimits',[0 255],'YBinLimits',[0 255]);
+        axis equal; colorbar, xlabel('Green Values')
+        ylabel('Blue Values'), title('Blue vs. Green Pixel Components')
+        ax = gca; ax.CLim = [0 500];
+    subplot(2,2,4);
+    histogram(r,'BinMethod','integers','FaceColor','r','EdgeAlpha',0,'FaceAlpha',1) 
+    hold on, histogram(g,'BinMethod','integers','FaceColor','g','EdgeAlpha',0,'FaceAlpha',0.7)
+    histogram(b,'BinMethod','integers','FaceColor','b','EdgeAlpha',0,'FaceAlpha',0.7)
+    xlabel('RGB value'); ylabel('Frequency'); title('Color histogram in RGB color space');
+    xlim([0 257]);
+end
