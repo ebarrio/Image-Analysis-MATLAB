@@ -2,7 +2,7 @@
 clc; close all; clear all;
 addpath('D:/');
 load .mat
-%% 1.b) GENERACIÓN DEL MODELO 1:
+%% 1.b) GENERACIÃ“N DEL MODELO 1:
 M1 = fitctree(predictors,response,'OptimizeHyperparameters', 'auto');
 disp('Tree ready');
 %% 1.c) IMPORTANCIA DE LAS VARIABLES EN EL MODELO
@@ -11,14 +11,14 @@ figure;
 bar(imp1);
 title('Predcitor Importance Estimates'), ylabel('Estimates'), xlabel('Predictors');
 
-%% 2.a) GENERACIÓN DEL MODELO 2:
+%% 2.a) GENERACIÃ“N DEL MODELO 2:
 rng(1);
 M2 = fitctree(predictors,response,'CrossVal', 'on');
 disp('Tree ready');
-%% 2.b) VISUALIZACIÓN DEL ARBOL DE DECISIONES
+%% 2.b) VISUALIZACIÃ“N DEL ARBOL DE DECISIONES
 view(M2.Trained{1},'Mode','graph')
 
-%% 3.a) SEPARACIÓN CONJUNTOS DE ENTRENAMIENTO Y DE VALIDACIÓN
+%% 3.a) SEPARACIÃ“N CONJUNTOS DE ENTRENAMIENTO Y DE VALIDACIÃ“N
 number_instances=length(predictors);
 number_training_instances=round((2/3)*number_instances);
 number_test_instances=number_instances-number_training_instances;
@@ -35,6 +35,6 @@ M3 = fitctree(training_data,training_response,'OptimizeHyperparameters', 'auto')
 validation_get_response = predict(M3,validation_data);
 VS = validation_ideal_response , validation_get_response;
 
-%% 3.c) MATRIZ DE CONFUSIÓN
+%% 3.c) MATRIZ DE CONFUSIÃ“N
 C = confusionmat(validation_ideal_response,validation_get_response);
 confusionchart(C);
