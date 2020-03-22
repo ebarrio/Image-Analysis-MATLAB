@@ -4,7 +4,7 @@ clear all; clc; close all
 
 %% Load the data
 
-load breast.mat
+load data.mat
 
 %% Records and features
 
